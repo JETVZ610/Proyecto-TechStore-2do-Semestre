@@ -117,7 +117,7 @@ INSERT INTO PRODUCTO (Nombre_Producto, Descripcion_Tecnica, Imagen_Producto, Pre
 	('Samsung Odyssey G3',
 	 'Monitor gaming de 24 pulgadas Full HD y alta frecuencia de actualización.',
 	 'imagenes/samsung_odyssey_g3.jpg',
-	 219.99, 7, 2, 'Activo', 3, 4),
+	 219.99, 2, 2, 'Activo', 3, 4),
 
 	('Kingston NV2 1TB',
 	 'Unidad SSD NVMe de 1 TB para almacenamiento interno.',

@@ -231,7 +231,12 @@ CREATE TABLE PAGO(
 	CONSTRAINT FK_Pago_MetodoPago FOREIGN KEY(ID_Metodo_Pago) REFERENCES METODO_PAGO(ID_Metodo_Pago),
 	CONSTRAINT UQ_Pago_Venta UNIQUE (ID_Venta),
 	CONSTRAINT CK_Pago_Monto CHECK (Monto > 0),
-	CONSTRAINT CK_Pago_EstadoPago CHECK (Estado_Pago IN('Pagado', 'Reembolsado'))
+	CONSTRAINT CK_Pago_EstadoPago CHECK (Estado_Pago IN('Pagado', 'Reembolsado')),
+	CONSTRAINT CK_Pago_Reembolso CHECK (
+		(Estado_Pago = 'Pagado' AND Fecha_Reembolso IS NULL)
+		OR
+		(Estado_Pago = 'Reembolsado' AND Fecha_Reembolso IS NOT NULL)
+	)
 );
 
 CREATE TABLE TASA_IVA(
