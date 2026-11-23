@@ -16,22 +16,14 @@ public class Categoria implements Desactivable {
     public int getIdCategoria(){return idCategoria;}
     public String getNombre(){return nombre;}
 
-    public void actualizarNombre(String nombre){
-        this.nombre = nombre;
-    }
+    public void actualizarNombre(String nombre){this.nombre = nombre;}
 
     @Override
-    public boolean estaActivo(){
-        return activo;
-    }
+    public boolean estaActivo(){return activo;}
 
     @Override
-    public void activar(){
-        this.activo = true;
-    }
+    public void activar(){this.activo = true;}
 
     @Override
-    public void desactivar(){
-        this.activo = false;
-    }
+    public void desactivar(){this.activo = false;}
 }

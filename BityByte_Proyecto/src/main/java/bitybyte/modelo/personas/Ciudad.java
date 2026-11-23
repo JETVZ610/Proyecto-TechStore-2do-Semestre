@@ -20,7 +20,5 @@ public class Ciudad {
     public String getNombreCiudad(){return nombreCiudad;}
     public String getProvincia(){return provincia;}
 
-    public String formatearUbicacion(){
-        return getProvincia() + ", " + getNombreCiudad();
-    }
+    public String formatearUbicacion(){return getProvincia() + ", " + getNombreCiudad();}
 }
