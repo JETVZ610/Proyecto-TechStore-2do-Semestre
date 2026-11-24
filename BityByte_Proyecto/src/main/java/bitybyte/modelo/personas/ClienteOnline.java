@@ -14,7 +14,6 @@ public class ClienteOnline extends Cliente implements Desactivable, Autenticable
 
         if(contrasena == null || contrasena.isBlank()){
             throw new IllegalArgumentException("La contraseña no puede estar vacía.");}
-
         if (carrito == null) {
             throw new IllegalArgumentException("El ClienteOnline debe tener un carrito.");}
 
@@ -23,13 +22,9 @@ public class ClienteOnline extends Cliente implements Desactivable, Autenticable
         this.activo = activo;
     }
 
-    public Carrito getCarrito() {
-        return carrito;
-    }
+    public Carrito getCarrito() {return carrito;}
 
-    public boolean puedeComprarEnLinea() {
-        return activo;
-    }
+    public boolean puedeComprarEnLinea() {return activo;}
 
     @Override
     public boolean validarCredenciales(String contrasena){return activo && this.contrasena.equals(contrasena);}

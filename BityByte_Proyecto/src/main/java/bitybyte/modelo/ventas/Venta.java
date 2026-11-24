@@ -135,20 +135,16 @@ public abstract class Venta {
             throw new IllegalArgumentException(
                     "Una venta histórica confirmada debe tener pago y factura."
             );}
-
         if(estaConfirmada()){
             throw new IllegalStateException("La venta ya se encuentra confirmada.");}
-
         if(detalles.isEmpty()){
             throw new IllegalArgumentException(
                     "Una venta histórica confirmada debe tener al menos un detalle."
             );}
-
         if(factura.getVenta() != this){
             throw new IllegalArgumentException(
                     "La factura debe pertenecer a esta venta."
             );}
-
         if(Math.abs(pago.getMonto() - factura.calcularTotal()) > 0.01){
             throw new IllegalArgumentException(
                     "El monto histórico del pago no coincide con el total de la factura."
@@ -174,13 +170,9 @@ public abstract class Venta {
 
     public abstract boolean confirmar(Pago pago, Factura factura);
 
-    protected void establecerPago(Pago pago){
-        this.pago = pago;
-    }
+    protected void establecerPago(Pago pago){this.pago = pago;}
 
-    protected void establecerFactura(Factura factura){
-        this.factura = factura;
-    }
+    protected void establecerFactura(Factura factura){this.factura = factura;}
 
     private DetalleVenta buscarDetalle(Producto producto){
         for(DetalleVenta detalle : detalles){

@@ -116,13 +116,8 @@ public class Compra {
         return subtotal;
     }
 
-    public double calcularIVA(){
-        return tasaIVA.calcularIVA(calcularSubtotal());
-    }
-
-    public double calcularTotal(){
-        return calcularSubtotal() + calcularIVA();
-    }
+    public double calcularIVA(){return tasaIVA.calcularIVA(calcularSubtotal());}
+    public double calcularTotal(){return calcularSubtotal() + calcularIVA();}
 
     public boolean confirmar(List<Suministro> suministrosVigentes){
         if(confirmada || detalles.isEmpty()){

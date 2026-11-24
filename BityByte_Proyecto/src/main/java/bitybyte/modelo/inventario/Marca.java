@@ -19,17 +19,11 @@ public class Marca implements Desactivable {
     public void actualizarNombre(String nombre){this.nombre = nombre;}
 
     @Override
-    public boolean estaActivo(){
-        return activo;
-    }
+    public boolean estaActivo(){return activo;}
 
     @Override
-    public void activar(){
-        this.activo = true;
-    }
+    public void activar(){this.activo = true;}
 
     @Override
-    public void desactivar(){
-        this.activo = false;
-    }
+    public void desactivar(){this.activo = false;}
 }

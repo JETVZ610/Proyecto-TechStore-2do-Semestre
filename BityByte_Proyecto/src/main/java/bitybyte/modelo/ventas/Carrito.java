@@ -19,13 +19,8 @@ public class Carrito {
         this.detalles = new ArrayList<>(detalles);
     }
 
-    public int getIdCarrito() {
-        return idCarrito;
-    }
-
-    public List<DetalleCarrito> getDetalles() {
-        return List.copyOf(detalles);
-    }
+    public int getIdCarrito() {return idCarrito;}
+    public List<DetalleCarrito> getDetalles() {return List.copyOf(detalles);}
 
     public boolean agregarProducto(Producto producto, int cantidad) {
         if (producto == null || cantidad <= 0) {
@@ -87,13 +82,8 @@ public class Carrito {
         return subtotal;
     }
 
-    public boolean estaVacio() {
-        return detalles.isEmpty();
-    }
-
-    public void vaciar() {
-        detalles.clear();
-    }
+    public boolean estaVacio() {return detalles.isEmpty();}
+    public void vaciar() {detalles.clear();}
 
     private DetalleCarrito buscarDetalle(Producto producto) {
         for (DetalleCarrito detalle : detalles) {

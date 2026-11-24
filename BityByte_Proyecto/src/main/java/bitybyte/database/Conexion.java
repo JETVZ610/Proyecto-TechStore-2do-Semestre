@@ -5,34 +5,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
-    private static final String URL = "jdbc:sqlserver://localhost\\SQLEXPRESS\\SQLEXPRESS:1433;database=TiendaTecnologicaByB;instance=SQLEXPRESS;encrypt=false;trustServerCertificate=true;";
+
+    private static final String URL =
+            "jdbc:sqlserver://localhost:1433;"
+                    + "databaseName=TiendaTecnologicaByB;"
+                    + "encrypt=true;trustServerCertificate=true;";
+
     private static final String USUARIO = "tiendatech";
-    private static final String CONTRASENA = "1234";
+    private static final String CONTRASENA =
+            System.getenv("DB_PASSWORD");
 
-    public static Connection conexion = null;
-
-    public static Connection obtenerConexion() {
-
-        try {
-            // Cargar el controlador JDBC de SQL Server (Asegúrate de tener el archivo .jar en tu proyecto)
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            // Obtener la conexión a la base de datos
-            conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
-        } catch (ClassNotFoundException e) {
-            System.err.println("Error al cargar el controlador JDBC de SQL Server: " + e.getMessage());
-        } catch (SQLException e) {
-            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
-        }
-        return conexion;
-    }
-
-    public static void cerrarConexion() {
-        if (conexion != null) {
-            try {
-                conexion.close();
-            } catch (SQLException e) {
-                System.err.println("Error al cerrar la conexión: " + e.getMessage());
-            }
-        }
+    public static Connection obtenerConexion() throws SQLException {
+        return DriverManager.getConnection(URL, USUARIO, CONTRASENA);
     }
 }

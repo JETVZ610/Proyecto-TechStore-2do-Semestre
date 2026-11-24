@@ -31,15 +31,7 @@ public class Factura {
     public Venta getVenta(){return venta;}
     public TasaIVA getTasaIVA(){return tasaIVA;}
 
-    public double calcularSubtotal(){
-        return venta.calcularSubtotal();
-    }
-
-    public double calcularIVA(){
-        return tasaIVA.calcularIVA(calcularSubtotal());
-    }
-
-    public double calcularTotal(){
-        return calcularSubtotal() + calcularIVA();
-    }
+    public double calcularSubtotal(){return venta.calcularSubtotal();}
+    public double calcularIVA(){return tasaIVA.calcularIVA(calcularSubtotal());}
+    public double calcularTotal(){return calcularSubtotal() + calcularIVA();}
 }

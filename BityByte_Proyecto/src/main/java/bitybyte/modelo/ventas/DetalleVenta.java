@@ -38,7 +38,5 @@ public class DetalleVenta {
         return true;
     }
 
-    public double calcularSubtotal(){
-        return precioUnitarioVenta * cantidad;
-    }
+    public double calcularSubtotal(){return precioUnitarioVenta * cantidad;}
 }

@@ -53,7 +53,5 @@ public class Pago {
         return true;
     }
 
-    public boolean estaReembolsado(){
-        return estado == EstadoPago.REEMBOLSADO;
-    }
+    public boolean estaReembolsado(){return estado == EstadoPago.REEMBOLSADO;}
 }

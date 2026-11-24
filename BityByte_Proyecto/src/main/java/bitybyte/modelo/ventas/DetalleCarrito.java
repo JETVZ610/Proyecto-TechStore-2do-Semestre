@@ -9,38 +9,24 @@ public class DetalleCarrito {
 
     public DetalleCarrito(int nroLinea, Producto producto, int cantidad) {
         if (nroLinea <= 0) {
-            throw new IllegalArgumentException("El número de línea debe ser mayor que cero.");
-        }
-
+            throw new IllegalArgumentException("El número de línea debe ser mayor que cero.");}
         if (producto == null) {
-            throw new IllegalArgumentException("El producto no puede ser nulo.");
-        }
-
+            throw new IllegalArgumentException("El producto no puede ser nulo.");}
         if (cantidad <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser mayor que cero.");
-        }
+            throw new IllegalArgumentException("La cantidad debe ser mayor que cero.");}
 
         this.nroLinea = nroLinea;
         this.producto = producto;
         this.cantidad = cantidad;
     }
 
-    public int getNroLinea() {
-        return nroLinea;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
+    public int getNroLinea() {return nroLinea;}
+    public Producto getProducto() {return producto;}
+    public int getCantidad() {return cantidad;}
 
     public boolean modificarCantidad(int cantidad) {
         if (cantidad <= 0) {
-            return false;
-        }
+            return false;}
 
         this.cantidad = cantidad;
         return true;

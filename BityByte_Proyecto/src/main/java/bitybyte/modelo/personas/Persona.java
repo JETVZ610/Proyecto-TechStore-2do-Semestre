@@ -94,7 +94,5 @@ public class Persona {
         this.direccion = direccion;
     }
 
-    public String obtenerNombreCompleto(){
-        return nombres + " " + apellidos;
-    }
+    public String obtenerNombreCompleto(){return nombres + " " + apellidos;}
 }

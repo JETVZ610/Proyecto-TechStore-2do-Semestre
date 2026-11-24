@@ -52,13 +52,9 @@ public class Empleado implements Autenticable, Desactivable {
         return true;
     }
 
-    public boolean tieneRol(String nombreRol){
-        return this.rol.getNombre().equals(nombreRol);
-    }
+    public boolean tieneRol(String nombreRol){return this.rol.getNombre().equals(nombreRol);}
 
-    public boolean puedeRealizar(OperacionEmpleado operacion){
-        return activo && rol.permiteOperacion(operacion);
-    }
+    public boolean puedeRealizar(OperacionEmpleado operacion){return activo && rol.permiteOperacion(operacion);}
 
     @Override
     public boolean validarCredenciales(String contrasena){return activo && this.contrasena.equals(contrasena);}
@@ -75,17 +71,11 @@ public class Empleado implements Autenticable, Desactivable {
     }
 
     @Override
-    public boolean estaActivo(){
-        return activo;
-    }
+    public boolean estaActivo(){return activo;}
 
     @Override
-    public void activar(){
-        this.activo = true;
-    }
+    public void activar(){this.activo = true;}
 
     @Override
-    public void desactivar(){
-        this.activo = false;
-    }
+    public void desactivar(){this.activo = false;}
 }

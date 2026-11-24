@@ -10,16 +10,11 @@ public class TasaIVA {
 
     public TasaIVA(int idIVA, double porcentaje, LocalDate fechaInicio, LocalDate fechaFin){
         if(porcentaje < 0 || porcentaje > 100){
-            throw new IllegalArgumentException("El porcentaje de IVA debe estar entre 0 y 100.");
-        }
-
+            throw new IllegalArgumentException("El porcentaje de IVA debe estar entre 0 y 100.");}
         if(fechaInicio == null){
-            throw new IllegalArgumentException("La fecha de inicio no puede ser nula.");
-        }
-
+            throw new IllegalArgumentException("La fecha de inicio no puede ser nula.");}
         if(fechaFin != null && fechaFin.isBefore(fechaInicio)){
-            throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio.");
-        }
+            throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio.");}
 
         this.idIVA = idIVA;
         this.porcentaje = porcentaje;
@@ -43,9 +38,7 @@ public class TasaIVA {
         return inicioValido && finValido;
     }
 
-    public double calcularIVA(double subtotal){
-        return subtotal * porcentaje / 100;
-    }
+    public double calcularIVA(double subtotal){return subtotal * porcentaje / 100;}
 
     public boolean cerrarVigencia(LocalDate fecha){
         if(fecha == null || fecha.isBefore(fechaInicio) || fechaFin != null){

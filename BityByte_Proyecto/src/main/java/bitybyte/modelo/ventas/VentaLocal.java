@@ -26,16 +26,8 @@ public class VentaLocal extends Venta {
         this.empleado = empleado;
     }
 
-    public static VentaLocal reconstruirHistorico(
-            int idVenta,
-            LocalDateTime fechaVenta,
-            List<DetalleVenta> detalles,
-            Cliente cliente,
-            Empleado empleado,
-            Pago pago,
-            int idFactura,
-            LocalDateTime fechaEmisionFactura,
-            TasaIVA tasaIVA){
+    public static VentaLocal reconstruirHistorico(int idVenta, LocalDateTime fechaVenta, List<DetalleVenta> detalles, Cliente cliente,
+            Empleado empleado, Pago pago, int idFactura, LocalDateTime fechaEmisionFactura, TasaIVA tasaIVA){
 
         if(pago == null){
             throw new IllegalArgumentException(
@@ -73,25 +65,18 @@ public class VentaLocal extends Venta {
     public boolean confirmar(Pago pago, Factura factura){
         if(estaConfirmada() || getDetalles().isEmpty()){
             return false;}
-
         if(!empleado.puedeRealizar(OperacionEmpleado.REGISTRAR_VENTA_LOCAL)){
             return false;}
-
         if(pago == null || factura == null){
             return false;}
-
         if(!preciosVigentes()){
             return false;}
-
         if(pago.getEstado() != EstadoPago.PAGADO){
             return false;}
-
         if(factura.getVenta() != this){
             return false;}
-
         if(Math.abs(pago.getMonto() - factura.calcularTotal()) > 0.01){
             return false;}
-
         for(DetalleVenta detalle : getDetalles()){
             if(!detalle.getProducto().puedeVenderse(detalle.getCantidad())){
                 return false;

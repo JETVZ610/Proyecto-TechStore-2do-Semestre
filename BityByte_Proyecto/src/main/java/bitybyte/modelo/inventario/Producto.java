@@ -117,9 +117,7 @@ public class Producto {
         }
     }
 
-    public boolean tieneStock(int cantidad) {
-        return cantidad > 0 && stock >= cantidad;
-    }
+    public boolean tieneStock(int cantidad) {return cantidad > 0 && stock >= cantidad;}
 
     public boolean reducirStock(int cantidad) {
         if (!tieneStock(cantidad)) {
@@ -130,9 +128,7 @@ public class Producto {
         return true;
     }
 
-    public boolean necesitaReabastecimiento() {
-        return stockMinimo != null && stock <= stockMinimo;
-    }
+    public boolean necesitaReabastecimiento() {return stockMinimo != null && stock <= stockMinimo;}
 
     public boolean activar() {
         if (this.estado == EstadoProducto.PENDIENTE
@@ -147,9 +143,7 @@ public class Producto {
         return false;
     }
 
-    public boolean estaActivo() {
-        return this.estado == EstadoProducto.ACTIVO;
-    }
+    public boolean estaActivo() {return this.estado == EstadoProducto.ACTIVO;}
 
     public boolean puedeVenderse(int cantidad) {
         return estaActivo()
@@ -157,7 +151,5 @@ public class Producto {
                 && tieneStock(cantidad);
     }
 
-    public void descontinuar() {
-        this.estado = EstadoProducto.DESCONTINUADO;
-    }
+    public void descontinuar() {this.estado = EstadoProducto.DESCONTINUADO;}
 }
