@@ -13,17 +13,14 @@ public class ClienteDAO {
 
     private final PersonaDAO personaDAO = new PersonaDAO();
 
-    public Cliente buscarPorId(int idPersona)
-            throws SQLException {
+    public Cliente buscarPorId(int idPersona) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
-
             return buscarPorId(con, idPersona);
         }
     }
 
-    Cliente buscarPorId(Connection con, int idPersona)
-            throws SQLException {
+    Cliente buscarPorId(Connection con, int idPersona) throws SQLException {
 
         if (idPersona <= 0) {
             throw new IllegalArgumentException("El ID de la persona debe ser positivo.");}
@@ -53,8 +50,7 @@ public class ClienteDAO {
         return new Cliente(persona);
     }
 
-    public Cliente buscarPorCedula(String cedula)
-            throws SQLException {
+    public Cliente buscarPorCedula(String cedula) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
 
@@ -112,7 +108,6 @@ public class ClienteDAO {
             con.setAutoCommit(false);
 
             try {
-
                 Persona persona = personaDAO.buscarPorCedula(
                         con, cedula
                 );
@@ -151,8 +146,7 @@ public class ClienteDAO {
         }
     }
 
-    Cliente insertar(Connection con, Persona persona)
-            throws SQLException {
+    Cliente insertar(Connection con, Persona persona) throws SQLException {
 
         if (con.getAutoCommit()) {
             throw new SQLException("Se requiere una transacción compartida.");}
@@ -183,7 +177,6 @@ public class ClienteDAO {
                 + "VALUES (?)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, persona.getIdPersona());
 
             if (ps.executeUpdate() != 1) {

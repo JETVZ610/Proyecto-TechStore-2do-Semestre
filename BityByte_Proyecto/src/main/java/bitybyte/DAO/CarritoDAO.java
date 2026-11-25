@@ -33,20 +33,14 @@ public class CarritoDAO {
                 ON p.ID_Marca = m.ID_Marca
             """;
 
-    public Carrito buscarPorId(int idCarrito)
-            throws SQLException {
-
+    public Carrito buscarPorId(int idCarrito) throws SQLException {
         try (Connection con = Conexion.obtenerConexion()) {
-
             return buscarPorId(con, idCarrito);
         }
     }
 
-    Carrito buscarPorId(Connection con, int idCarrito)
-            throws SQLException {
-
+    Carrito buscarPorId(Connection con, int idCarrito) throws SQLException {
         validarId(idCarrito);
-
         return buscarCarrito(
                 con,
                 " WHERE ca.ID_Carrito = ?",
@@ -54,20 +48,14 @@ public class CarritoDAO {
         );
     }
 
-    public Carrito buscarPorCliente(int idPersona)
-            throws SQLException {
-
+    public Carrito buscarPorCliente(int idPersona) throws SQLException {
         try (Connection con = Conexion.obtenerConexion()) {
-
             return buscarPorCliente(con, idPersona);
         }
     }
 
-    Carrito buscarPorCliente(Connection con, int idPersona)
-            throws SQLException {
-
+    Carrito buscarPorCliente(Connection con, int idPersona) throws SQLException {
         validarId(idPersona);
-
         return buscarCarrito(
                 con,
                 " WHERE ca.ID_Persona_ClienteOnline = ?",
@@ -75,41 +63,30 @@ public class CarritoDAO {
         );
     }
 
-    private Carrito buscarCarrito(Connection con,
-                                  String filtro,
-                                  int id)
+    private Carrito buscarCarrito(Connection con, String filtro, int id)
             throws SQLException {
-
         String sql = SELECT_BASE + filtro
                 + " ORDER BY d.Nro_Linea";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, id);
-
             try (ResultSet rs = ps.executeQuery()) {
-
                 if (!rs.next()) {
                     return null;
                 }
 
                 int idCarrito = rs.getInt("ID_Carrito");
-
                 List<DetalleCarrito> detalles = new ArrayList<>();
 
                 do {
-
                     int nroLinea = rs.getInt("Nro_Linea");
-
                     if (!rs.wasNull()) {
-
                         detalles.add(new DetalleCarrito(
                                 nroLinea,
                                 productoDAO.construirProducto(rs),
                                 rs.getInt("Cantidad")
                         ));
                     }
-
                 } while (rs.next());
 
                 return new Carrito(idCarrito, detalles);
@@ -117,16 +94,11 @@ public class CarritoDAO {
         }
     }
 
-    Carrito insertar(Connection con, int idPersona)
-            throws SQLException {
-
+    Carrito insertar(Connection con, int idPersona) throws SQLException {
         validarId(idPersona);
-
         if (con.getAutoCommit()) {
-
             throw new SQLException(
-                    "Se requiere una transacción compartida.");
-        }
+                    "Se requiere una transacción compartida.");}
 
         String sql = "INSERT INTO CARRITO "
                 + "(ID_Persona_ClienteOnline) VALUES (?)";
@@ -137,34 +109,25 @@ public class CarritoDAO {
             ps.setInt(1, idPersona);
 
             if (ps.executeUpdate() != 1) {
-
                 throw new SQLException(
-                        "No se pudo crear el carrito.");
-            }
+                        "No se pudo crear el carrito.");}
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
-
                 if (!rs.next()) {
-
                     throw new SQLException(
-                            "No se pudo recuperar el ID del carrito.");
-                }
+                            "No se pudo recuperar el ID del carrito.");}
 
                 return new Carrito(rs.getInt(1));
             }
         }
     }
 
-    public boolean agregarProducto(int idCarrito,
-                                   int idProducto,
-                                   int cantidad)
+    public boolean agregarProducto(int idCarrito, int idProducto, int cantidad)
             throws SQLException {
-
         validarId(idProducto);
         validarCantidad(cantidad);
 
         return ejecutarCambio(idCarrito, con -> {
-
             int cantidadActual = obtenerCantidad(
                     con, idCarrito, idProducto
             );
@@ -174,8 +137,7 @@ public class CarritoDAO {
             if (total > Integer.MAX_VALUE) {
 
                 throw new IllegalArgumentException(
-                        "La cantidad supera el límite permitido.");
-            }
+                        "La cantidad supera el límite permitido.");}
 
             int nuevaCantidad = (int) total;
 
@@ -186,7 +148,6 @@ public class CarritoDAO {
             }
 
             if (cantidadActual > 0) {
-
                 return actualizarCantidad(
                         con, idCarrito,
                         idProducto, nuevaCantidad
@@ -216,20 +177,13 @@ public class CarritoDAO {
         });
     }
 
-    public boolean modificarCantidad(int idCarrito,
-                                     int idProducto,
-                                     int cantidad)
-            throws SQLException {
-
+    public boolean modificarCantidad(int idCarrito, int idProducto, int cantidad) throws SQLException {
         validarId(idProducto);
         validarCantidad(cantidad);
-
         return ejecutarCambio(idCarrito, con -> {
-
             int cantidadActual = obtenerCantidad(
                     con, idCarrito, idProducto
             );
-
             if (cantidadActual == 0) {
                 return false;
             }
@@ -247,21 +201,15 @@ public class CarritoDAO {
         });
     }
 
-    public boolean retirarProducto(int idCarrito,
-                                   int idProducto)
-            throws SQLException {
-
+    public boolean retirarProducto(int idCarrito, int idProducto) throws SQLException {
         validarId(idProducto);
-
         return ejecutarCambio(idCarrito, con -> {
 
             String sql = "DELETE FROM DETALLE_CARRITO "
                     + "WHERE ID_Carrito = ? "
                     + "AND ID_Producto = ?";
 
-            try (PreparedStatement ps =
-                         con.prepareStatement(sql)) {
-
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, idCarrito);
                 ps.setInt(2, idProducto);
 
@@ -270,19 +218,13 @@ public class CarritoDAO {
         });
     }
 
-    public boolean vaciar(int idCarrito)
-            throws SQLException {
-
+    public boolean vaciar(int idCarrito) throws SQLException {
         return ejecutarCambio(idCarrito, con -> {
-
             String sql = "DELETE FROM DETALLE_CARRITO "
                     + "WHERE ID_Carrito = ?";
 
-            try (PreparedStatement ps =
-                         con.prepareStatement(sql)) {
-
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, idCarrito);
-
                 ps.executeUpdate();
 
                 return true;
@@ -290,11 +232,7 @@ public class CarritoDAO {
         });
     }
 
-    private boolean actualizarCantidad(Connection con,
-                                       int idCarrito,
-                                       int idProducto,
-                                       int cantidad)
-            throws SQLException {
+    private boolean actualizarCantidad(Connection con, int idCarrito, int idProducto, int cantidad) throws SQLException {
 
         String sql = "UPDATE DETALLE_CARRITO "
                 + "SET Cantidad = ? "
@@ -311,32 +249,23 @@ public class CarritoDAO {
         }
     }
 
-    private int obtenerCantidad(Connection con,
-                                int idCarrito,
-                                int idProducto)
-            throws SQLException {
-
+    private int obtenerCantidad(Connection con, int idCarrito, int idProducto) throws SQLException {
         String sql = "SELECT Cantidad FROM DETALLE_CARRITO "
                 + "WHERE ID_Carrito = ? "
                 + "AND ID_Producto = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, idCarrito);
             ps.setInt(2, idProducto);
 
             try (ResultSet rs = ps.executeQuery()) {
-
                 return rs.next()
                         ? rs.getInt("Cantidad") : 0;
             }
         }
     }
 
-    private int siguienteNroLinea(Connection con,
-                                  int idCarrito)
-            throws SQLException {
-
+    private int siguienteNroLinea(Connection con, int idCarrito) throws SQLException {
         String sql = """
                 SELECT ISNULL(MAX(Nro_Linea), 0) AS MayorLinea
                 FROM DETALLE_CARRITO
@@ -344,30 +273,21 @@ public class CarritoDAO {
                 """;
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, idCarrito);
 
             try (ResultSet rs = ps.executeQuery()) {
-
                 rs.next();
-
                 int mayorLinea = rs.getInt("MayorLinea");
-
                 if (mayorLinea == Integer.MAX_VALUE) {
-
                     throw new SQLException(
-                            "Se alcanzó el límite de líneas.");
-                }
+                            "Se alcanzó el límite de líneas.");}
 
                 return mayorLinea + 1;
             }
         }
     }
 
-    private boolean productoDisponible(Connection con,
-                                       int idProducto,
-                                       int cantidad)
-            throws SQLException {
+    private boolean productoDisponible(Connection con, int idProducto, int cantidad) throws SQLException {
 
         String sql = """
                 SELECT ID_Producto
@@ -379,20 +299,16 @@ public class CarritoDAO {
                 """;
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, idProducto);
             ps.setInt(2, cantidad);
 
             try (ResultSet rs = ps.executeQuery()) {
-
                 return rs.next();
             }
         }
     }
 
-    private boolean bloquearCarrito(Connection con,
-                                    int idCarrito)
-            throws SQLException {
+    private boolean bloquearCarrito(Connection con, int idCarrito) throws SQLException {
 
         String sql = """
                 SELECT ca.ID_Carrito
@@ -405,9 +321,7 @@ public class CarritoDAO {
                 """;
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, idCarrito);
-
             try (ResultSet rs = ps.executeQuery()) {
 
                 return rs.next();
@@ -417,31 +331,20 @@ public class CarritoDAO {
 
     @FunctionalInterface
     private interface OperacionCarrito {
-
         boolean ejecutar(Connection con) throws SQLException;
     }
 
-    private boolean ejecutarCambio(int idCarrito,
-                                   OperacionCarrito operacion)
-            throws SQLException {
-
+    private boolean ejecutarCambio(int idCarrito, OperacionCarrito operacion) throws SQLException {
         validarId(idCarrito);
-
         try (Connection con = Conexion.obtenerConexion()) {
-
             con.setAutoCommit(false);
 
             try {
-
                 if (!bloquearCarrito(con, idCarrito)) {
-
                     con.rollback();
-
                     return false;
                 }
-
                 boolean resultado = operacion.ejecutar(con);
-
                 if (resultado) {
                     con.commit();
                 } else {
@@ -454,9 +357,7 @@ public class CarritoDAO {
 
                 try {
                     con.rollback();
-
                 } catch (SQLException errorRollback) {
-
                     e.addSuppressed(errorRollback);
                 }
 
@@ -466,7 +367,6 @@ public class CarritoDAO {
     }
 
     private void validarId(int id) {
-
         if (id <= 0) {
             throw new IllegalArgumentException(
                     "El identificador debe ser positivo.");}

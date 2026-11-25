@@ -42,12 +42,10 @@ public class CiudadDAO {
         String sql = "SELECT ID_Ciudad, Nombre_Ciudad, Provincia "
                 + "FROM CIUDAD ORDER BY Nombre_Ciudad";
 
-        try (Connection con = Conexion.obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = Conexion.obtenerConexion(); PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-
                 Ciudad ciudad = new Ciudad(
                         rs.getInt("ID_Ciudad"),
                         rs.getString("Nombre_Ciudad"),
@@ -78,8 +76,7 @@ public class CiudadDAO {
             try {
                 Ciudad ciudad;
 
-                try (PreparedStatement ps = con.prepareStatement(
-                        sql, Statement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
                     ps.setString(1, nombreCiudad);
                     ps.setString(2, provincia);

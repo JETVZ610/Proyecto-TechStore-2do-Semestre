@@ -18,19 +18,14 @@ public class ClienteOnlineDAO {
     private final CarritoDAO carritoDAO = new CarritoDAO();
     private final EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
-    public ClienteOnline buscarPorId(int idPersona)
-            throws SQLException {
+    public ClienteOnline buscarPorId(int idPersona) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
-
             return buscarPorId(con, idPersona, false);
         }
     }
 
-    ClienteOnline buscarPorId(Connection con,
-                              int idPersona,
-                              boolean bloquear)
-            throws SQLException {
+    ClienteOnline buscarPorId(Connection con, int idPersona, boolean bloquear) throws SQLException {
 
         validarId(idPersona);
 
@@ -79,8 +74,7 @@ public class ClienteOnlineDAO {
         );
     }
 
-    public ClienteOnline buscarPorCedula(String cedula)
-            throws SQLException {
+    public ClienteOnline buscarPorCedula(String cedula) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
 
@@ -98,21 +92,17 @@ public class ClienteOnlineDAO {
         }
     }
 
-    public List<ClienteOnline> listar()
-            throws SQLException {
+    public List<ClienteOnline> listar() throws SQLException {
 
         return ejecutarListado(false);
     }
 
-    public List<ClienteOnline> listarActivos()
-            throws SQLException {
+    public List<ClienteOnline> listarActivos() throws SQLException {
 
         return ejecutarListado(true);
     }
 
-    public ClienteOnline autenticar(String cedula,
-                                    String contrasena)
-            throws SQLException {
+    public ClienteOnline autenticar(String cedula, String contrasena) throws SQLException {
 
         ClienteOnline cliente = buscarPorCedula(cedula);
 
@@ -141,7 +131,6 @@ public class ClienteOnlineDAO {
         validarContrasena(contrasena);
 
         if (!contrasena.equals(confirmacion)) {
-
             throw new IllegalArgumentException(
                     "Las contraseñas no coinciden.");
         }
@@ -192,8 +181,7 @@ public class ClienteOnlineDAO {
                     VALUES (?, ?, 1)
                     """;
 
-            try (PreparedStatement ps =
-                         con.prepareStatement(sql)) {
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
 
                 ps.setInt(1, idPersona);
                 ps.setNString(2, contrasena);
@@ -222,8 +210,7 @@ public class ClienteOnlineDAO {
             int idPersona,
             String actual,
             String nueva,
-            String confirmacion)
-            throws SQLException {
+            String confirmacion) throws SQLException {
 
         validarId(idPersona);
         validarContrasena(nueva);
@@ -254,8 +241,7 @@ public class ClienteOnlineDAO {
             String cedula,
             String correo,
             String nueva,
-            String confirmacion)
-            throws SQLException {
+            String confirmacion) throws SQLException {
 
         validarCedula(cedula);
         validarCorreo(correo);
@@ -286,28 +272,19 @@ public class ClienteOnlineDAO {
         }
     }
 
-    public boolean activar(int idPersona,
-                           int idResponsable)
-            throws SQLException {
+    public boolean activar(int idPersona, int idResponsable) throws SQLException {
 
-        return cambiarEstado(
-                idPersona, idResponsable, true
-        );
+        return cambiarEstado(idPersona, idResponsable, true);
     }
 
-    public boolean desactivar(int idPersona,
-                              int idResponsable)
-            throws SQLException {
+    public boolean desactivar(int idPersona, int idResponsable) throws SQLException {
 
         return cambiarEstado(
                 idPersona, idResponsable, false
         );
     }
 
-    private boolean cambiarEstado(int idPersona,
-                                  int idResponsable,
-                                  boolean activo)
-            throws SQLException {
+    private boolean cambiarEstado(int idPersona, int idResponsable, boolean activo) throws SQLException {
 
         validarId(idPersona);
         validarId(idResponsable);
@@ -330,8 +307,7 @@ public class ClienteOnlineDAO {
             String sql = "UPDATE CLIENTE_ONLINE "
                     + "SET Activo = ? WHERE ID_Persona = ?";
 
-            try (PreparedStatement ps =
-                         con.prepareStatement(sql)) {
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
 
                 ps.setBoolean(1, activo);
                 ps.setInt(2, idPersona);
@@ -344,8 +320,7 @@ public class ClienteOnlineDAO {
     private boolean actualizarContrasena(
             Connection con,
             int idPersona,
-            String contrasena)
-            throws SQLException {
+            String contrasena) throws SQLException {
 
         String sql = "UPDATE CLIENTE_ONLINE "
                 + "SET Contrasena = ? WHERE ID_Persona = ?";
@@ -359,9 +334,7 @@ public class ClienteOnlineDAO {
         }
     }
 
-    private Persona buscarPersonaParaRegistro(
-            Connection con, String cedula)
-            throws SQLException {
+    private Persona buscarPersonaParaRegistro(Connection con, String cedula) throws SQLException {
 
         String sql = """
                 SELECT ID_Persona
@@ -398,9 +371,7 @@ public class ClienteOnlineDAO {
         return persona;
     }
 
-    private List<ClienteOnline> ejecutarListado(
-            boolean soloActivos)
-            throws SQLException {
+    private List<ClienteOnline> ejecutarListado(boolean soloActivos) throws SQLException {
 
         List<ClienteOnline> clientes = new ArrayList<>();
         List<Integer> identificadores = new ArrayList<>();

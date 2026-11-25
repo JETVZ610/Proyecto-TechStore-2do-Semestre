@@ -106,8 +106,7 @@ public class MarcaDAO {
         }
     }
 
-    public boolean actualizar(int idMarca, String nombre)
-            throws SQLException {
+    public boolean actualizar(int idMarca, String nombre) throws SQLException {
 
         validarNombre(nombre);
 
@@ -126,17 +125,14 @@ public class MarcaDAO {
     }
 
     public boolean activar(int idMarca) throws SQLException {
-
         return cambiarEstado(idMarca, true);
     }
 
     public boolean desactivar(int idMarca) throws SQLException {
-
         return cambiarEstado(idMarca, false);
     }
 
-    private boolean cambiarEstado(int idMarca, boolean activo)
-            throws SQLException {
+    private boolean cambiarEstado(int idMarca, boolean activo) throws SQLException {
 
         String sql = "UPDATE MARCA "
                 + "SET Activo = ? "
@@ -152,8 +148,7 @@ public class MarcaDAO {
         }
     }
 
-    private Marca construirMarca(ResultSet rs)
-            throws SQLException {
+    private Marca construirMarca(ResultSet rs) throws SQLException {
 
         return new Marca(
                 rs.getInt("ID_Marca"),
@@ -162,8 +157,7 @@ public class MarcaDAO {
         );
     }
 
-    private List<Marca> ejecutarListado(String sql)
-            throws SQLException {
+    private List<Marca> ejecutarListado(String sql) throws SQLException {
 
         List<Marca> marcas = new ArrayList<>();
 

@@ -22,17 +22,14 @@ public class EmpleadoDAO {
             FROM EMPLEADO
             """;
 
-    public Empleado buscarPorId(int idPersona)
-            throws SQLException {
+    public Empleado buscarPorId(int idPersona) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
-
             return buscarPorId(con, idPersona, false);
         }
     }
 
-    Empleado buscarPorId(Connection con, int idPersona,
-                         boolean bloquear) throws SQLException {
+    Empleado buscarPorId(Connection con, int idPersona, boolean bloquear) throws SQLException {
 
         if (idPersona <= 0) {
             throw new IllegalArgumentException(
@@ -46,8 +43,7 @@ public class EmpleadoDAO {
         return buscarUno(con, sql, idPersona);
     }
 
-    public Empleado buscarPorCodigo(String codEmpleado)
-            throws SQLException {
+    public Empleado buscarPorCodigo(String codEmpleado) throws SQLException {
 
         validarCodigo(codEmpleado);
 
@@ -61,8 +57,7 @@ public class EmpleadoDAO {
         }
     }
 
-    public Empleado buscarPorCedula(String cedula)
-            throws SQLException {
+    public Empleado buscarPorCedula(String cedula) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
 
@@ -81,12 +76,10 @@ public class EmpleadoDAO {
     }
 
     public List<Empleado> listar() throws SQLException {
-
         return ejecutarListado(false);
     }
 
     public List<Empleado> listarActivos() throws SQLException {
-
         return ejecutarListado(true);
     }
 
@@ -208,10 +201,7 @@ public class EmpleadoDAO {
         });
     }
 
-    public boolean asignarRol(int idPersona,
-                              int idNuevoRol,
-                              int idResponsable)
-            throws SQLException {
+    public boolean asignarRol(int idPersona, int idNuevoRol, int idResponsable) throws SQLException {
 
         return ejecutarTransaccion(con -> {
 
@@ -254,8 +244,7 @@ public class EmpleadoDAO {
     public boolean cambiarContrasena(int idPersona,
                                      String actual,
                                      String nueva,
-                                     String confirmacion)
-            throws SQLException {
+                                     String confirmacion) throws SQLException {
 
         validarContrasena(nueva);
 
@@ -284,8 +273,7 @@ public class EmpleadoDAO {
     public boolean recuperarContrasena(String cedula,
                                        String correo,
                                        String nueva,
-                                       String confirmacion)
-            throws SQLException {
+                                       String confirmacion) throws SQLException {
 
         validarContrasena(nueva);
 
@@ -335,16 +323,14 @@ public class EmpleadoDAO {
         });
     }
 
-    public boolean activar(int idPersona, int idResponsable)
-            throws SQLException {
+    public boolean activar(int idPersona, int idResponsable) throws SQLException {
 
         return cambiarEstado(
                 idPersona, idResponsable, true
         );
     }
 
-    public boolean desactivar(int idPersona, int idResponsable)
-            throws SQLException {
+    public boolean desactivar(int idPersona, int idResponsable) throws SQLException {
 
         return cambiarEstado(
                 idPersona, idResponsable, false
@@ -353,8 +339,7 @@ public class EmpleadoDAO {
 
     private boolean cambiarEstado(int idPersona,
                                   int idResponsable,
-                                  boolean activo)
-            throws SQLException {
+                                  boolean activo) throws SQLException {
 
         return ejecutarTransaccion(con -> {
 
@@ -380,8 +365,7 @@ public class EmpleadoDAO {
 
     private boolean actualizarContrasena(Connection con,
                                          int idPersona,
-                                         String contrasena)
-            throws SQLException {
+                                         String contrasena) throws SQLException {
 
         String sql = "UPDATE EMPLEADO "
                 + "SET Contrasena = ? WHERE ID_Persona = ?";
@@ -399,8 +383,7 @@ public class EmpleadoDAO {
     private Empleado verificarPermiso(
             Connection con,
             int idResponsable,
-            OperacionEmpleado operacion)
-            throws SQLException {
+            OperacionEmpleado operacion) throws SQLException {
 
         Empleado responsable = buscarPorId(
                 con, idResponsable, true
@@ -419,8 +402,7 @@ public class EmpleadoDAO {
 
     private Empleado buscarUno(Connection con,
                                String sql,
-                               Object valor)
-            throws SQLException {
+                               Object valor) throws SQLException {
 
         int idPersona;
         int idRol;
@@ -470,8 +452,7 @@ public class EmpleadoDAO {
         );
     }
 
-    private List<Empleado> ejecutarListado(boolean soloActivos)
-            throws SQLException {
+    private List<Empleado> ejecutarListado(boolean soloActivos) throws SQLException {
 
         List<Empleado> empleados = new ArrayList<>();
         List<Integer> identificadores = new ArrayList<>();
@@ -517,8 +498,7 @@ public class EmpleadoDAO {
         T ejecutar(Connection con) throws SQLException;
     }
 
-    private <T> T ejecutarTransaccion(OperacionSQL<T> operacion)
-            throws SQLException {
+    private <T> T ejecutarTransaccion(OperacionSQL<T> operacion) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
 

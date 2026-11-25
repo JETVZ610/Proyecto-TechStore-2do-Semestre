@@ -69,14 +69,12 @@ public class SuministroDAO {
     }
 
     public List<Suministro> listar() throws SQLException {
-
         return ejecutarListado(
                 SELECT_BASE + ORDEN, null, null
         );
     }
 
-    public List<Suministro> listarPorProveedor(String ruc)
-            throws SQLException {
+    public List<Suministro> listarPorProveedor(String ruc) throws SQLException {
 
         validarRuc(ruc);
 
@@ -88,8 +86,7 @@ public class SuministroDAO {
         );
     }
 
-    public List<Suministro> listarPorProducto(int idProducto)
-            throws SQLException {
+    public List<Suministro> listarPorProducto(int idProducto) throws SQLException {
 
         validarIdProducto(idProducto);
 
@@ -101,8 +98,7 @@ public class SuministroDAO {
         );
     }
 
-    public List<Suministro> listarDisponiblesPorProducto(
-            int idProducto) throws SQLException {
+    public List<Suministro> listarDisponiblesPorProducto(int idProducto) throws SQLException {
 
         validarIdProducto(idProducto);
 
@@ -115,8 +111,7 @@ public class SuministroDAO {
         );
     }
 
-    public List<Suministro> listarDisponiblesPorProveedor(
-            String ruc) throws SQLException {
+    public List<Suministro> listarDisponiblesPorProveedor(String ruc) throws SQLException {
 
         validarRuc(ruc);
 
@@ -162,8 +157,7 @@ public class SuministroDAO {
     }
 
     public boolean actualizarPrecioCompraOfrecido(
-            String ruc, int idProducto, double precio)
-            throws SQLException {
+            String ruc, int idProducto, double precio) throws SQLException {
 
         validarRuc(ruc);
         validarIdProducto(idProducto);
@@ -195,9 +189,7 @@ public class SuministroDAO {
         }
     }
 
-    private List<Suministro> ejecutarListado(
-            String sql, String ruc, Integer idProducto)
-            throws SQLException {
+    private List<Suministro> ejecutarListado(String sql, String ruc, Integer idProducto) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -219,8 +211,7 @@ public class SuministroDAO {
         }
     }
 
-    private List<Suministro> construirSuministros(ResultSet rs)
-            throws SQLException {
+    private List<Suministro> construirSuministros(ResultSet rs) throws SQLException {
 
         List<Suministro> suministros = new ArrayList<>();
 
@@ -284,8 +275,7 @@ public class SuministroDAO {
         return suministros;
     }
 
-    private Producto construirProducto(ResultSet rs)
-            throws SQLException {
+    private Producto construirProducto(ResultSet rs) throws SQLException {
 
         Categoria categoria = new Categoria(
                 rs.getInt("ID_Categoria"),
@@ -338,28 +328,23 @@ public class SuministroDAO {
 
     private void validarRuc(String ruc) {
         if (ruc == null || ruc.isBlank() || ruc.length() != 13) {
-
             throw new IllegalArgumentException(
                     "El RUC debe tener 13 caracteres.");}
     }
 
     private void validarIdProducto(int idProducto) {
         if (idProducto <= 0) {
-
             throw new IllegalArgumentException(
                     "El ID del producto debe ser positivo.");}
     }
 
     private BigDecimal validarPrecio(double precio) {
-
         if (!Double.isFinite(precio)
                 || precio <= 0 || precio > 99999999.99) {
-
             throw new IllegalArgumentException(
                     "El precio debe ser positivo y no " + "superar 99999999.99.");}
 
         try {
-
             return BigDecimal.valueOf(precio)
                     .setScale(2, RoundingMode.UNNECESSARY);
 

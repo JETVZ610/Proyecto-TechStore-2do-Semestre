@@ -163,12 +163,10 @@ public class ProveedorDAO {
     }
 
     public boolean activar(String ruc) throws SQLException {
-
         return cambiarEstado(ruc, true);
     }
 
     public boolean desactivar(String ruc) throws SQLException {
-
         return cambiarEstado(ruc, false);
     }
 
@@ -224,8 +222,7 @@ public class ProveedorDAO {
         }
     }
 
-    private List<Proveedor> ejecutarListado(String sql, String ruc)
-            throws SQLException {
+    private List<Proveedor> ejecutarListado(String sql, String ruc) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -241,8 +238,7 @@ public class ProveedorDAO {
         }
     }
 
-    private List<Proveedor> construirProveedores(ResultSet rs)
-            throws SQLException {
+    private List<Proveedor> construirProveedores(ResultSet rs) throws SQLException {
 
         List<Proveedor> proveedores = new ArrayList<>();
 
@@ -290,7 +286,6 @@ public class ProveedorDAO {
     }
 
     private void validarRuc(String ruc) {
-
         if (ruc == null || ruc.isBlank() || ruc.length() != 13) {
             throw new IllegalArgumentException(
                     "El RUC debe tener 13 caracteres.");}

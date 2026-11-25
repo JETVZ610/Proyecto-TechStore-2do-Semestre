@@ -36,8 +36,7 @@ public class PersonaDAO {
         }
     }
 
-    Persona buscarPorId(Connection con, int idPersona)
-            throws SQLException {
+    Persona buscarPorId(Connection con, int idPersona) throws SQLException {
 
         validarId(idPersona);
 
@@ -47,14 +46,12 @@ public class PersonaDAO {
     }
 
     public Persona buscarPorCedula(String cedula) throws SQLException {
-
         try (Connection con = Conexion.obtenerConexion()) {
             return buscarPorCedula(con, cedula);
         }
     }
 
-    Persona buscarPorCedula(Connection con, String cedula)
-            throws SQLException {
+    Persona buscarPorCedula(Connection con, String cedula) throws SQLException {
 
         validarCedula(cedula);
 
@@ -63,8 +60,7 @@ public class PersonaDAO {
         );
     }
 
-    public Persona buscarPorCorreo(String correo)
-            throws SQLException {
+    public Persona buscarPorCorreo(String correo) throws SQLException {
 
         validarTexto(correo, 150, "El correo");
 
@@ -77,7 +73,6 @@ public class PersonaDAO {
     }
 
     public List<Persona> listar() throws SQLException {
-
         try (Connection con = Conexion.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(
                      SELECT_BASE + ORDEN);
@@ -109,8 +104,7 @@ public class PersonaDAO {
                      String apellidos,
                      String correoElectronico,
                      List<String> telefonos,
-                     Direccion direccion)
-            throws SQLException {
+                     Direccion direccion) throws SQLException {
 
         if (con.getAutoCommit()) {
 
@@ -176,8 +170,7 @@ public class PersonaDAO {
                               String apellidos,
                               String correoElectronico,
                               List<String> telefonos,
-                              Direccion direccion)
-            throws SQLException {
+                              Direccion direccion) throws SQLException {
 
         validarId(idPersona);
 
@@ -226,8 +219,7 @@ public class PersonaDAO {
 
                     if (ps.executeUpdate() != 1) {
 
-                        throw new SQLException(
-                                "No se pudo actualizar la persona.");
+                        throw new SQLException("No se pudo actualizar la persona.");
                     }
                 }
 
@@ -254,10 +246,7 @@ public class PersonaDAO {
         }
     }
 
-    private void asignarDatos(PreparedStatement ps,
-                              int i,
-                              Persona persona)
-            throws SQLException {
+    private void asignarDatos(PreparedStatement ps, int i, Persona persona) throws SQLException {
 
         Direccion d = persona.getDireccion();
 
@@ -270,8 +259,7 @@ public class PersonaDAO {
         ps.setNString(i, d.getReferencia());
     }
 
-    private void insertarTelefonos(Connection con, int idPersona, List<String> telefonos)
-            throws SQLException {
+    private void insertarTelefonos(Connection con, int idPersona, List<String> telefonos) throws SQLException {
 
         String sql = "INSERT INTO TELEFONO_PERSONA "
                 + "(ID_Persona, Telefono) VALUES (?, ?)";
@@ -292,9 +280,7 @@ public class PersonaDAO {
         }
     }
 
-    private void eliminarTelefonos(Connection con,
-                                   int idPersona)
-            throws SQLException {
+    private void eliminarTelefonos(Connection con, int idPersona) throws SQLException {
 
         String sql = "DELETE FROM TELEFONO_PERSONA "
                 + "WHERE ID_Persona = ?";
@@ -307,8 +293,7 @@ public class PersonaDAO {
         }
     }
 
-    private List<Persona> construirPersonas(ResultSet rs)
-            throws SQLException {
+    private List<Persona> construirPersonas(ResultSet rs) throws SQLException {
 
         List<Persona> personas = new ArrayList<>();
 

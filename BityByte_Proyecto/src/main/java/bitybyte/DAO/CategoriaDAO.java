@@ -19,13 +19,11 @@ public class CategoriaDAO {
         String sql = "SELECT ID_Categoria, Nombre_Categoria, Activo "
                 + "FROM CATEGORIA WHERE ID_Categoria = ?";
 
-        try (Connection con = Conexion.obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = Conexion.obtenerConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, idCategoria);
 
             try (ResultSet rs = ps.executeQuery()) {
-
                 if (rs.next()) {
                     return construirCategoria(rs);
                 }
@@ -36,7 +34,6 @@ public class CategoriaDAO {
     }
 
     public List<Categoria> listar() throws SQLException {
-
         String sql = "SELECT ID_Categoria, Nombre_Categoria, Activo "
                 + "FROM CATEGORIA ORDER BY Nombre_Categoria";
 
@@ -60,7 +57,6 @@ public class CategoriaDAO {
                 + "VALUES (?, 1)";
 
         try (Connection con = Conexion.obtenerConexion()) {
-
             con.setAutoCommit(false);
 
             try {
@@ -73,15 +69,13 @@ public class CategoriaDAO {
 
                     if (ps.executeUpdate() != 1) {
                         throw new SQLException(
-                                "No se pudo insertar la categoría.");
-                    }
+                                "No se pudo insertar la categoría.");}
 
                     try (ResultSet rs = ps.getGeneratedKeys()) {
 
                         if (!rs.next()) {
                             throw new SQLException(
-                                    "No se pudo recuperar el ID generado.");
-                        }
+                                    "No se pudo recuperar el ID generado.");}
 
                         categoria = new Categoria(
                                 rs.getInt(1),
@@ -108,8 +102,7 @@ public class CategoriaDAO {
         }
     }
 
-    public boolean actualizar(int idCategoria, String nombre)
-            throws SQLException {
+    public boolean actualizar(int idCategoria, String nombre) throws SQLException {
 
         validarNombre(nombre);
 
@@ -130,8 +123,7 @@ public class CategoriaDAO {
     public boolean activar(int idCategoria) throws SQLException {return cambiarEstado(idCategoria, true);}
     public boolean desactivar(int idCategoria) throws SQLException {return cambiarEstado(idCategoria, false);}
 
-    private boolean cambiarEstado(int idCategoria, boolean activo)
-            throws SQLException {
+    private boolean cambiarEstado(int idCategoria, boolean activo) throws SQLException {
 
         String sql = "UPDATE CATEGORIA "
                 + "SET Activo = ? "
@@ -147,8 +139,7 @@ public class CategoriaDAO {
         }
     }
 
-    private Categoria construirCategoria(ResultSet rs)
-            throws SQLException {
+    private Categoria construirCategoria(ResultSet rs) throws SQLException {
 
         return new Categoria(
                 rs.getInt("ID_Categoria"),
@@ -157,8 +148,7 @@ public class CategoriaDAO {
         );
     }
 
-    private List<Categoria> ejecutarListado(String sql)
-            throws SQLException {
+    private List<Categoria> ejecutarListado(String sql) throws SQLException {
 
         List<Categoria> categorias = new ArrayList<>();
 

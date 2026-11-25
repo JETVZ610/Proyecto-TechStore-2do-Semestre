@@ -38,8 +38,7 @@ public class ProductoDAO {
     private static final String ORDEN =
             " ORDER BY p.Nombre_Producto, p.ID_Producto";
 
-    public Producto buscarPorId(int idProducto)
-            throws SQLException {
+    public Producto buscarPorId(int idProducto) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
 
@@ -97,8 +96,7 @@ public class ProductoDAO {
                              String imagenProducto,
                              int idCategoria,
                              int idMarca,
-                             Map<String, Double> suministros)
-            throws SQLException {
+                             Map<String, Double> suministros) throws SQLException {
 
         validarDatos(nombre, descripcionTecnica, imagenProducto,
                 idCategoria, idMarca);
@@ -180,8 +178,7 @@ public class ProductoDAO {
     private void insertarSuministros(
             Connection con,
             int idProducto,
-            Map<String, BigDecimal> precios)
-            throws SQLException {
+            Map<String, BigDecimal> precios) throws SQLException {
 
         String sql = """
                 INSERT INTO SUMINISTRA (
@@ -194,7 +191,6 @@ public class ProductoDAO {
                 """;
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             for (Map.Entry<String, BigDecimal> entrada
                     : precios.entrySet()) {
 
@@ -249,9 +245,7 @@ public class ProductoDAO {
         }
     }
 
-    public boolean establecerPrecioVenta(int idProducto,
-                                         double precio)
-            throws SQLException {
+    public boolean establecerPrecioVenta(int idProducto, double precio) throws SQLException {
 
         BigDecimal valor = validarPrecio(precio);
 
@@ -269,9 +263,7 @@ public class ProductoDAO {
         }
     }
 
-    public boolean establecerStockMinimo(int idProducto,
-                                         int stockMinimo)
-            throws SQLException {
+    public boolean establecerStockMinimo(int idProducto, int stockMinimo) throws SQLException {
 
         if (stockMinimo < 0) {
             throw new IllegalArgumentException(
@@ -291,8 +283,7 @@ public class ProductoDAO {
         }
     }
 
-    public boolean descontinuar(int idProducto)
-            throws SQLException {
+    public boolean descontinuar(int idProducto) throws SQLException {
 
         String sql = "UPDATE PRODUCTO "
                 + "SET Estado_Producto = 'Descontinuado' "
@@ -307,8 +298,7 @@ public class ProductoDAO {
         }
     }
 
-    private List<Producto> ejecutarListado(String sql)
-            throws SQLException {
+    private List<Producto> ejecutarListado(String sql) throws SQLException {
 
         List<Producto> productos = new ArrayList<>();
 

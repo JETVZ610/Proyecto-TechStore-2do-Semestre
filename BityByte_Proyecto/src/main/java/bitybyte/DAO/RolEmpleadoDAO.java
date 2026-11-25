@@ -17,8 +17,7 @@ public class RolEmpleadoDAO {
             "SELECT ID_Rol, Nombre_Rol, Descripcion "
                     + "FROM ROL_EMPLEADO";
 
-    public RolEmpleado buscarPorId(int idRol)
-            throws SQLException {
+    public RolEmpleado buscarPorId(int idRol) throws SQLException {
 
         try (Connection con = Conexion.obtenerConexion()) {
 
@@ -27,7 +26,6 @@ public class RolEmpleadoDAO {
     }
 
     RolEmpleado buscarPorId(Connection con, int idRol) throws SQLException {
-
         if (idRol <= 0) {
 
             throw new IllegalArgumentException("El ID del rol debe ser positivo.");}
@@ -85,8 +83,7 @@ public class RolEmpleadoDAO {
         return roles;
     }
 
-    private RolEmpleado construirRol(ResultSet rs)
-            throws SQLException {
+    private RolEmpleado construirRol(ResultSet rs) throws SQLException {
 
         return new RolEmpleado(
                 rs.getInt("ID_Rol"),
