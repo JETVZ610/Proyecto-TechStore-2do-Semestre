@@ -15,8 +15,8 @@ public class Persona {
     public Persona(int idPersona, String cedula, String nombres, String apellidos,
                    String correoElectronico, List<String> telefonos, Direccion direccion){
 
-        if(cedula == null || cedula.isBlank()){
-            throw new IllegalArgumentException("La cédula no puede estar vacía.");}
+        if (cedula == null || !cedula.matches("[0-9]{10}")) {
+            throw new IllegalArgumentException("La cédula debe contener 10 dígitos.");}
         if(nombres == null || nombres.isBlank()){
             throw new IllegalArgumentException("Los nombres no pueden estar vacíos.");}
         if(apellidos == null || apellidos.isBlank()){

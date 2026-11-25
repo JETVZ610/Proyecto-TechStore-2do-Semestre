@@ -12,8 +12,9 @@ public class Suministro {
             throw new IllegalArgumentException("El proveedor no puede ser nulo.");}
         if(producto == null){
             throw new IllegalArgumentException("El producto no puede ser nulo.");}
-        if(precioCompraOfrecido <= 0){
-            throw new IllegalArgumentException("El precio de compra ofrecido debe ser mayor que cero.");}
+        if (!Double.isFinite(precioCompraOfrecido) || precioCompraOfrecido <= 0) {
+            throw new IllegalArgumentException(
+                    "El precio de compra ofrecido debe ser " + "un número finito mayor que cero.");}
 
         this.proveedor = proveedor;
         this.producto = producto;
@@ -24,10 +25,9 @@ public class Suministro {
     public Producto getProducto(){return producto;}
     public double getPrecioCompraOfrecido(){return precioCompraOfrecido;}
 
-    public boolean actualizarPrecioCompraOfrecido(double precio){
-        if(precio <= 0){
-            return false;
-        }
+    public boolean actualizarPrecioCompraOfrecido(double precio) {
+        if (!Double.isFinite(precio) || precio <= 0) {
+            return false;}
 
         this.precioCompraOfrecido = precio;
         return true;

@@ -44,8 +44,7 @@ public class Empleado implements Autenticable, Desactivable {
             if(!responsable.tieneRol("Empleado Admin")){
                 return false;}
 
-            if(responsable == this){
-                return false;}
+            if (responsable.getPersona().getIdPersona() == this.persona.getIdPersona()) {return false;}
         }
 
         this.rol = nuevoRol;

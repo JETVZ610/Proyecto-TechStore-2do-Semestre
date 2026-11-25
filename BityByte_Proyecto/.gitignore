@@ -1,3 +1,4 @@
+### Maven ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -9,9 +10,22 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/workspace.xml
+.idea/dataSources/
+.idea/dataSources.local.xml
 *.iws
 *.iml
 *.ipr
+
+### Archivos compilados ###
+out/
+bin/
+*.class
+
+### Variables de entorno y credenciales ###
+.env
+.env.*
+!.env.example
 
 ### Eclipse ###
 .apt_generated

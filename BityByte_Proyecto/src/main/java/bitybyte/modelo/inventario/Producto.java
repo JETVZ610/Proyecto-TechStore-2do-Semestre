@@ -25,8 +25,8 @@ public class Producto {
             throw new IllegalArgumentException("La descripción técnica no puede estar vacía.");}
         if(imagenProducto == null || imagenProducto.isBlank()){
             throw new IllegalArgumentException("La referencia de imagen no puede estar vacía.");}
-        if(precioVenta != null && precioVenta <= 0){
-            throw new IllegalArgumentException("El precio de venta debe ser mayor que cero.");}
+        if (precioVenta != null && (!Double.isFinite(precioVenta) || precioVenta <= 0)) {
+            throw new IllegalArgumentException("El precio de venta debe ser un número " + "finito mayor que cero.");}
         if(stock < 0){
             throw new IllegalArgumentException("El stock no puede ser negativo.");}
         if(stockMinimo != null && stockMinimo < 0){
@@ -94,10 +94,9 @@ public class Producto {
     }
 
     public boolean establecerPrecioVenta(double precio) {
-        if (precio <= 0) {
+        if (!Double.isFinite(precio) || precio <= 0) {
             return false;
         }
-
         this.precioVenta = precio;
         return true;
     }
